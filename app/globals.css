@@ -25,3 +25,7 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.orange_gradient {
+  @apply bg-gradient-to-r from-orange-300 to-orange-700 bg-clip-text text-transparent;
+}
