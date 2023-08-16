@@ -11,7 +11,7 @@ const Navbar = () => {
             {/* icon */}
             <div className='flex items-center'>
                 <Image src="/hammer.svg" width={40} height={40} alt="hammer" />
-                <p className='text-3xl ml-4 orange_gradient font-bold'>Trade Talk</p>
+                <p className='text-3xl ml-4 orange_gradient font-bold'>TradeTalk</p>
             </div>
             {/* links */}
             <div className='flex items-center'>
