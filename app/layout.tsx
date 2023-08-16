@@ -1,6 +1,7 @@
 
 import Provider from '@components/Provider'
 import './globals.css'
+import Navbar from '@components/Navbar'
 
 export const metadata = {
     title: "PromptVista",
@@ -16,7 +17,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                         <div className='gradient' />
                     </div>
                     <main className='app'>
-                        {/* <Navbar /> */}
+                        <Navbar />
                         {children}
                     </main>
                 </Provider>
