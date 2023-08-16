@@ -7,7 +7,7 @@ import { useSession, signOut, signIn } from 'next-auth/react';
 const Navbar = () => {
     const { data: session } = useSession();
     return (
-        <nav className='bg-slate-700 p-4 flex justify-between'>
+        <nav className='bg-custom_secondary p-4 flex justify-between'>
             {/* icon */}
             <div className='flex items-center'>
                 <Image src="/hammer.svg" width={40} height={40} alt="hammer" />
@@ -16,7 +16,13 @@ const Navbar = () => {
             {/* links */}
             <div className='flex items-center'>
                 {
-                    session !== null && <p className='mr-4 pr-4 border-r border-orange-600 hover:text-orange-500 cursor-pointer'>{session?.user.name}</p>
+                    session !== null && 
+                    <div className='flex items-center'>
+                        <Link href="/question/new" className='mr-3 hover:text-orange-500'>
+                            Create Question
+                        </Link>
+                        <p className='mr-4 pr-4 border-r border-orange-600 hover:text-orange-500 cursor-pointer'>{session?.user.name}</p>
+                    </div>
                 }
                 <Link href="/" className='mr-3 hover:text-orange-500'>About</Link>
                 <Link href="/" className='mr-3 hover:text-orange-500'>Contact</Link>

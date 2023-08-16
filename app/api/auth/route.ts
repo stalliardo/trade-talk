@@ -6,7 +6,6 @@ export const POST = async (req: Request) => {
         await connectToDB();
         const userExists = await User.findOne({email: "test2@gmail.com"});
         if(!userExists){
-            // console.log("email is unique");
             await User.create({
                 email: "test2@gmail.com",
                 username: "ssssdewss",
@@ -15,7 +14,6 @@ export const POST = async (req: Request) => {
 
         return new Response("User created", { status: 200 });
     } catch (error) {
-        console.log("error = ", error);
         return new Response(JSON.stringify({error: "Failed to create user"}), { status: 500 });
     }
 }
