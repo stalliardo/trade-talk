@@ -20,14 +20,14 @@ export default function Home() {
   return (
     <main className="flex flex-col">
       <div className="h-56 text-center">
-        <h1 className="text-5xl mt-16">Welcome to <span className="orange_gradient font-bold">TradeTalk</span></h1>
+        <h1 className="text-6xl mt-16">Welcome to <span className="orange_gradient font-bold">TradeTalk</span></h1>
         <p className="text-lg mt-2">Your Expert Community for Trade-Related Questions!</p>
       </div>
       <div className="h-72 bg-slate-800 text-center px-20">
         <p className="mt-24 text-lg">TradeTalk is a platform where skilled tradespeople come together to share knowledge, insights, and solutions. Whether you're a seasoned professional or just starting out, TradeTalk is your go-to destination for getting answers to your trade-related questions. Connect with fellow tradespeople, ask questions, share experiences, and find solutions that make a difference in your work.</p>
       </div>
       <div className="h-72 px-6">
-        <h1 className="text-4xl text-center mt-16 text-orange-500 ">Why Choose TradeTalk?</h1>
+        <h1 className="text-4xl text-center mt-12 text-orange-500 ">Why Choose TradeTalk?</h1>
         <div className="flex justify-between px-10 mt-10">
           <WhyChooseCard imgSrc="/connect.svg" title="Connect With Experts" text="Access a community of experienced tradespeople who understand the challenges you face." />
           <WhyChooseCard imgSrc="/question.svg" title="Ask and Learn" text="Have a burning question? Post it and get answers from the community's collective expertise." />
