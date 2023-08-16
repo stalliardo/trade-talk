@@ -1,8 +1,7 @@
-import Auth from "@components/Auth";
 
 export default function Home() {
   return (
-   <main>
+   <main className="bg-blue-400">
      
    </main>
   )
