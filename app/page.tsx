@@ -17,22 +17,6 @@ const WhyChooseCard = ({ imgSrc, title, text }: WhyChooseProps) => {
   )
 }
 
-interface WhyChooseProps {
-  imgSrc: string;
-  title: string;
-  text: string
-}
-
-const WhyChooseCard = ({ imgSrc, title, text }: WhyChooseProps) => {
-  return (
-    <div className="container_bg w-1/4 rounded-lg p-3 inline-block">
-      <Image src={imgSrc} width={70} height={100} alt="icon" className="mx-auto mt-3" />
-      <h3 className="text-center text-lg font-bold text-orange-500 mt-3">{title}</h3>
-      <p className="text-center text-gray-300">{text}</p>
-    </div>
-  )
-}
-
 export default function Home() {
   return (
     <main className="flex flex-col">
