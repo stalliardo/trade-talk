@@ -7,16 +7,12 @@ import SelectMenu from '@components/SelectMenu';
 import { tradesList } from '@consts';
 
 const QuestionPage = () => {
-
   const [questionCategory, setQuestionCategory] = useState('Bricklaying');
   const [title, setTitle] = useState('');
   const [question, setQuestion] = useState('');
-  const [errorText, setErrorText] = useState("");
+  const [errorText, setErrorText] = useState(""); // TODO
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
-
-
   const router = useRouter();
-
   const { data: session } = useSession();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -44,12 +40,9 @@ const QuestionPage = () => {
     } catch (error) {
       setErrorText("There was a problem creating the question. Please try again later");
     }
-
   }
 
-
   useEffect(() => {
-    // TODO conditons for the disbaled button
     if (question.length < 16 || title.length < 10) {
       setSubmitButtonDisabled(true)
     } else {
