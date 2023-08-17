@@ -8,6 +8,15 @@ const AnswerSchema = new Schema({
     question: {
         type: Schema.Types.ObjectId,
         ref: "Question"
+    },
+    createdOn: {
+        type: Date,
+        default: Date.now
+    },
+    creator: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: [true, "creator id is required!"],
     }
 });
 

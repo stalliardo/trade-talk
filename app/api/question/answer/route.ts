@@ -9,10 +9,10 @@ export async function POST(req: NextRequest) {
         try {
             await connectToDB();
             // const { id } = req.query;
-            const { text, questionId } = await req.json();
+            const { text, questionId, userId } = await req.json();
             
             // Create a new Answer document
-            const newAnswer = new Answer({ text, question: questionId });
+            const newAnswer = new Answer({ text, question: questionId, creator: userId });
             await newAnswer.save();
 
             // Update the answers field in the corresponding question

@@ -1,23 +1,29 @@
 "use client";
 
-import { QuestionData } from '@types';
+import AnswerCard from '@components/AnswerCard';
+import { AnswerData, QuestionData } from '@types';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react'
 
 const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
 
   const [question, setQuestion] = useState<QuestionData | null>(null);
+  const { data: session } = useSession();
 
   useEffect(() => {
-      const getQuestion = async () => {
-          const response = await fetch(`/api/question/view/${params.id}`);
-          const data = await response.json();
 
-          console.log("data from /apiquestion/view = ", data.question);
+    console.log("user = ", session?.user);
 
-          setQuestion(data.question);
-      }
+    const getQuestion = async () => {
+      const response = await fetch(`/api/question/view/${params.id}`);
+      const data = await response.json();
 
-      getQuestion();
+      console.log("data from /apiquestion/view = ", data.question);
+
+      setQuestion(data.question);
+    }
+
+    getQuestion();
   }, [])
 
   const [answer, setAnswer] = useState("");
@@ -28,19 +34,21 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
     console.log("submit anser called");
 
     try {
-        const response = await fetch(`/api/question/answer`, {
-          method: "POST",
-          body: JSON.stringify({
-            text: answer,
-            questionId: params.id
-          })
-        });
+      const response = await fetch(`/api/question/answer`, {
+        method: "POST",
+        body: JSON.stringify({
+          text: answer,
+          questionId: params.id,
+          userId: session?.user.id
+        })
+      });
 
-        const data = await response.json();
-
-        console.log("data from api/question/answer =  ", data);
+      if (response.ok) {
+        console.log("response okay called");
+        // TODO what do we do after posting an answer?
+      }
     } catch (error) {
-        console.log("error caught = ", error);
+      console.log("error caught = ", error);
     }
   }
 
@@ -53,17 +61,38 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
         </p>
 
         {/* if authed */}
-        <p>Answer this question:</p>
-        <form className='flex flex-col' onSubmit={handleAnswerSubmitted}>
-          <textarea
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
-            className='input_bg w-1/2'
-            placeholder='min 16 characters'
-          />
+        {
+          session?.user ?
+            <>
+              <p>Answer this question:</p>
+              <form className='flex flex-col' onSubmit={handleAnswerSubmitted}>
+                <textarea
+                  value={answer}
+                  onChange={(e) => setAnswer(e.target.value)}
+                  className='input_bg w-1/2'
+                  placeholder='min 16 characters'
+                />
 
-          <button type='submit' className='button_bg w-1/4 mt-4' disabled={answer.length < 16}>Submit</button>
-        </form>
+                <button type='submit' className='button_bg w-1/4 mt-4' disabled={answer.length < 16}>Submit</button>
+              </form>
+            </>
+            : null
+        }
+
+        {/* Diplay the ansers if any found */}
+
+        {
+          question?.answers.length ?
+            <div>
+              <p className='mt-12'>{`${question.answers.length} answer(s)`}</p>
+              {
+                question.answers.map((answer: AnswerData) => (
+                  <AnswerCard key={answer._id} data={answer}/>
+                ))
+              }
+            </div>
+            : <div>No answers have been provided yet.</div>
+        }
       </div>
     </section>
   )

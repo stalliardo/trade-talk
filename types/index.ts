@@ -6,6 +6,12 @@ export interface Profile {
     _id?: string;
 }
 
+export interface AnswerData {
+    text: string;
+    _id: string;
+    question: string;
+}
+
 export interface QuestionData {
     createdOn: Date | string;
     creator: string;
@@ -14,5 +20,5 @@ export interface QuestionData {
     question: string;
     _id: string;
     views: number;
-    answers: []; // TODO change this will be an array of answers
+    answers: AnswerData[]; // TODO change this will be an array of answers
 }
