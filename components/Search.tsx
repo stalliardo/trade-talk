@@ -23,7 +23,7 @@ const Search = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch(`/api/question?q=${searchText}`);
+            const response = await fetch(`/api/question/search?q=${searchText}`);
             const data = await response.json();
 
             console.log("data = ", data);

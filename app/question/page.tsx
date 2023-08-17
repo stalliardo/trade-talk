@@ -1,8 +1,30 @@
+"use client";
+
 import Search from '@components/Search'
 import SearchResults from '@components/SearchResults'
-import React from 'react'
+import { QuestionData } from '@types';
+import React, { useEffect, useState } from 'react'
 
 const QuestionHomePage = () => {
+
+  const [data, setData] = useState<QuestionData[]>([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch("/api/question");
+      const data = await response.json();
+
+      console.log("data = ", data);
+
+      if(data.questions && data.questions.length){
+        setData(data.questions);
+      }
+    }
+
+    getData();
+  }, [])
+
+
   return (
     <section>
       <div className="h-[150px] text-center">
@@ -17,7 +39,8 @@ const QuestionHomePage = () => {
         </div>
 
         <div>
-          <SearchResults />
+          {/* <h2 className='text-xl text-left'>Latest Questions:</h2> */}
+          <SearchResults data={data}/>
         </div>
       </div>
     </section>

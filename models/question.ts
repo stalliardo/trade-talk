@@ -22,7 +22,19 @@ const QuestionSchema = new Schema({
     createdOn: {
         type: Date,
         default: Date.now
-    }
+    },
+
+    views: {
+        type: Number,
+        default: 0
+    },
+
+    answers: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Answer"
+        }
+    ]
 })
 
 const Question = models.Question || model("Question", QuestionSchema);
