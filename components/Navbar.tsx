@@ -9,14 +9,16 @@ const Navbar = () => {
     return (
         <nav className='bg-custom_secondary p-4 flex justify-between'>
             {/* icon */}
-            <div className='flex items-center'>
-                <Image src="/hammer.svg" width={40} height={40} alt="hammer" />
-                <p className='text-3xl ml-4 orange_gradient font-bold'>TradeTalk</p>
-            </div>
+            <Link href="/">
+                <div className='flex items-center'>
+                    <Image src="/hammer.svg" width={40} height={40} alt="hammer" />
+                    <p className='text-3xl ml-4 orange_gradient font-bold'>TradeTalk</p>
+                </div>
+            </Link>
             {/* links */}
             <div className='flex items-center'>
                 {
-                    session !== null && 
+                    session !== null &&
                     <div className='flex items-center'>
                         <Link href="/question/new" className='mr-3 hover:text-orange-500'>
                             Create Question
