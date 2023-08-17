@@ -1,4 +1,21 @@
 import Image from "next/image";
+import Link from "next/link";
+
+interface WhyChooseProps {
+  imgSrc: string;
+  title: string;
+  text: string
+}
+
+const WhyChooseCard = ({ imgSrc, title, text }: WhyChooseProps) => {
+  return (
+    <div className="container_bg w-1/4 rounded-lg p-3 inline-block">
+      <Image src={imgSrc} width={70} height={100} alt="icon" className="mx-auto mt-3" />
+      <h3 className="text-center text-lg font-bold text-orange-500 mt-3">{title}</h3>
+      <p className="text-center text-gray-300">{text}</p>
+    </div>
+  )
+}
 
 interface WhyChooseProps {
   imgSrc: string;
@@ -25,6 +42,9 @@ export default function Home() {
       </div>
       <div className="h-72 bg-slate-800 text-center px-20">
         <p className="mt-24 text-lg">TradeTalk is a platform where skilled tradespeople come together to share knowledge, insights, and solutions. Whether you're a seasoned professional or just starting out, TradeTalk is your go-to destination for getting answers to your trade-related questions. Connect with fellow tradespeople, ask questions, share experiences, and find solutions that make a difference in your work.</p>
+        <Link href="/question">
+          <button className="button_bg mt-10 w-[300px] border border-custom_border">Question Page</button>
+        </Link>
       </div>
       <div className="h-72 px-6">
         <h1 className="text-4xl text-center mt-12 text-orange-500 ">Why Choose TradeTalk?</h1>

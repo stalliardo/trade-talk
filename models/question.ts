@@ -18,6 +18,11 @@ const QuestionSchema = new Schema({
         type: String,
         required: [true, "Question is required!"],
     },
+
+    createdOn: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 const Question = models.Question || model("Question", QuestionSchema);
