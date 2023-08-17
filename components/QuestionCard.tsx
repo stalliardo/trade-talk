@@ -22,7 +22,7 @@ const QuestionCard = ({ question }: QuestionCardProps) => {
                 <p>{question.views}</p>
             </div>
             <div className="w-1/6">
-                <p>10</p>
+                <p>{question.answers.length}</p>
             </div>
         </div>
     )
