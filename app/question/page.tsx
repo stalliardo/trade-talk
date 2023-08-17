@@ -1,5 +1,6 @@
 "use client";
 
+import Filter from '@components/Filter';
 import Search from '@components/Search'
 import SearchResults from '@components/SearchResults'
 import { QuestionData } from '@types';
@@ -24,6 +25,20 @@ const QuestionHomePage = () => {
     getData();
   }, [])
 
+  const filterData = (filter: string) => {
+    if(filter === "Unanswered"){
+      return data.filter((item: QuestionData) => item.answers.length === 0);
+    } else if(filter === "Answered") {
+     return data.filter((item: QuestionData) => item.answers.length > 0)
+    }
+
+    return data;
+  }
+
+  const handleFilterSelected = (filter: string) => {
+    const filteredData = filterData(filter);
+    setData(filteredData);
+  }
 
   return (
     <section>
@@ -32,15 +47,21 @@ const QuestionHomePage = () => {
         <p className="text-lg mt-6">Have a trade related question? Well, you've come to the right place. Search or browse the questions below.</p>
       </div>
 
-      <div className="h-72 border text-center px-20 max-w-7xl mx-auto mt-10">
+      <div className="border text-center px-20 max-w-7xl mx-auto mt-10 h-fit py-10">
         <div>
           <h2 className='text-xl text-left'>Ask Tradesman for Advice:</h2>
           <Search />
         </div>
 
         <div>
-          {/* <h2 className='text-xl text-left'>Latest Questions:</h2> */}
-          <SearchResults data={data}/>
+          <Filter filterSelected={handleFilterSelected}/>
+        </div>
+
+        <div>
+          {
+            data.length ?
+            <SearchResults data={data}/> : null
+          }
         </div>
       </div>
     </section>

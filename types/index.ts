@@ -14,5 +14,5 @@ export interface QuestionData {
     question: string;
     _id: string;
     views: number;
-    answers: number; // TODO change this will be an array of answers
+    answers: []; // TODO change this will be an array of answers
 }
