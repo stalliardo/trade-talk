@@ -1,5 +1,7 @@
 import Question from "@models/question";
+import { AnswerData } from "@types";
 import { connectToDB } from "@utils/database";
+import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
@@ -18,12 +20,10 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
                 )
 
                 if(updatedQuestion.answers.length > 0) {
-                    console.log("pop called");
-                    await updatedQuestion.populate("answers")
+            
+                    // populate the answers and the associated user with each answer
+                    await updatedQuestion.populate({path: "answers", populate: {path: "creator"}})   
                 }
-
-                // now get the associated answers for this question and return in the response with the new question
-
                 return NextResponse.json({ message: "Views successfully updated!", question: updatedQuestion }, { status: 200 })
 
             } catch (error) {

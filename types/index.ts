@@ -6,10 +6,17 @@ export interface Profile {
     _id?: string;
 }
 
+export interface CreatorData {
+    email: string;
+    username: string;
+}
+
 export interface AnswerData {
     text: string;
     _id: string;
     question: string;
+    creator: CreatorData | string;
+    createdOn: Date | string;
 }
 
 export interface QuestionData {

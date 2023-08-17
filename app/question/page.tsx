@@ -3,33 +3,40 @@
 import Filter from '@components/Filter';
 import Search from '@components/Search'
 import SearchResults from '@components/SearchResults'
+import Spinner from '@components/Spinner';
 import { QuestionData } from '@types';
 import React, { useEffect, useState } from 'react'
 
 const QuestionHomePage = () => {
 
   const [data, setData] = useState<QuestionData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch("/api/question");
-      const data = await response.json();
+      try {
+        const response = await fetch("/api/question");
+        const data = await response.json();
 
-      console.log("data = ", data);
+        console.log("data = ", data);
 
-      if(data.questions && data.questions.length){
-        setData(data.questions);
+        if (data.questions && data.questions.length) {
+          setData(data.questions);
+        }
+      } catch (error) {
+
+      } finally {
+        setIsLoading(false);
       }
     }
-
     getData();
   }, [])
 
   const filterData = (filter: string) => {
-    if(filter === "Unanswered"){
+    if (filter === "Unanswered") {
       return data.filter((item: QuestionData) => item.answers.length === 0);
-    } else if(filter === "Answered") {
-     return data.filter((item: QuestionData) => item.answers.length > 0)
+    } else if (filter === "Answered") {
+      return data.filter((item: QuestionData) => item.answers.length > 0)
     }
 
     return data;
@@ -54,16 +61,22 @@ const QuestionHomePage = () => {
         </div>
 
         <div>
-          <Filter filterSelected={handleFilterSelected}/>
+        {/* TODO FIX */}
+          <Filter filterSelected={handleFilterSelected} /> 
         </div>
 
-        <div>
-          {
-            data.length ?
-            <SearchResults data={data}/> : null
-          }
-        </div>
+        {
+          !isLoading ?
+            <div>
+              {
+                data.length ?
+                  <SearchResults data={data} /> : null
+              }
+            </div> : 
+            <Spinner />
+        }
       </div>
+      
     </section>
   )
 }
