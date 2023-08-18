@@ -2,7 +2,7 @@
 
 import Filter from '@components/Filter';
 import Search from '@components/Search'
-import SearchResults from '@components/SearchResults'
+import DisplayQuestions from '@components/DisplayQuestions'
 import Spinner from '@components/Spinner';
 import { QuestionData } from '@types';
 import React, { useEffect, useState } from 'react'
@@ -77,7 +77,7 @@ const QuestionHomePage = () => {
             <div>
               {
                 data.length ?
-                  <SearchResults data={fData} /> : null
+                  <DisplayQuestions data={fData} /> : null
               }
             </div> :
             <Spinner />

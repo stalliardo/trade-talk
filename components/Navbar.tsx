@@ -23,7 +23,9 @@ const Navbar = () => {
                         <Link href="/question/new" className='mr-3 hover:text-orange-500'>
                             Create Question
                         </Link>
-                        <p className='mr-4 pr-4 border-r border-orange-600 hover:text-orange-500 cursor-pointer'>{session?.user.name}</p>
+                        <Link href='/profile' className='mr-12 hover:text-orange-500'>
+                            {session?.user.name}
+                        </Link>
                     </div>
                 }
                 <Link href="/" className='mr-3 hover:text-orange-500'>About</Link>
