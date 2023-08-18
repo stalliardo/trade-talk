@@ -6,17 +6,12 @@ import { AnswerData, QuestionData } from '@types';
 import { useSession, signIn } from 'next-auth/react';
 import { useEffect, useState } from 'react'
 
-
 const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
-
-  const [question, setQuestion] = useState<QuestionData | null>(null);
+  const [question, setQuestion] = useState<QuestionData>();
   const { data: session } = useSession();
   const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
-
-    console.log("user = ", session?.user);
-
     const getQuestion = async () => {
       try {
         const response = await fetch(`/api/question/view/${params.id}`);
@@ -36,25 +31,38 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
   }, [])
 
   const [answer, setAnswer] = useState("");
+  console.log("user = ", session?.user.username);
 
   const handleAnswerSubmitted = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     console.log("submit anser called");
 
+    const newAnswer: AnswerData = {
+      text: answer,
+      questionId: params.id,
+      userId: session?.user.id,
+      creator: {
+        username: session?.user.username,
+        email: ""
+      },
+    }
+
     try {
       const response = await fetch(`/api/question/answer`, {
         method: "POST",
-        body: JSON.stringify({
-          text: answer,
-          questionId: params.id,
-          userId: session?.user.id
-        })
+        body: JSON.stringify(newAnswer)
       });
 
       if (response.ok) {
-        console.log("response okay called");
-        // TODO what do we do after posting an answer?
+        const data = await response.json();
+        if (data.answer) {
+
+          setQuestion((prev) => ({
+            ...prev as QuestionData,
+            answers: [...prev?.answers as AnswerData[], { ...newAnswer }]
+          }))
+        }
       }
     } catch (error) {
       console.log("error caught = ", error);
@@ -86,28 +94,22 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
                           onChange={(e) => setAnswer(e.target.value)}
                           className='input_bg w-full min-h-[200px]'
                           placeholder='min 16 characters'
-                          
                         />
-
                         <button type='submit' className='button_bg w-1/6 mt-4' disabled={answer.length < 16}>Submit</button>
                       </form>
                     </>
                     : <p className='text-xl text-right ' ><span className='text-orange-500 cursor-pointer' onClick={() => signIn()}>Log in</span> to answer this question</p>
                 }
-
               </div>
             </div>
-
-
             {/* Diplay the ansers if any found */}
-
             {
               question?.answers.length ?
                 <div>
                   <p className='mt-2 mb-4'>{`${question.answers.length} answer(s)`}</p>
                   {
-                    question.answers.map((answer: AnswerData) => (
-                      <AnswerCard key={answer._id} data={answer} />
+                    question.answers.map((a: AnswerData) => (
+                      <AnswerCard key={a._id || a.text} data={a} />
                     ))
                   }
                 </div>

@@ -13,10 +13,12 @@ export interface CreatorData {
 
 export interface AnswerData {
     text: string;
-    _id: string;
-    question: string;
-    creator: CreatorData | string;
-    createdOn: Date | string;
+    _id?: string;
+    question?: string;
+    questionId?: string;
+    creator?: CreatorData | string;
+    createdOn?: Date | string;
+    userId?: string;
 }
 
 export interface QuestionData {

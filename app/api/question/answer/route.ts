@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
                 { $push: { answers: newAnswer._id } } // Add the answer's ID to the answers array
             );
 
-            return NextResponse.json({message: "Answer successfully created!"}, { status: 201});
+            return NextResponse.json({message: "Answer successfully created!", answer: newAnswer}, { status: 201});
 
         } catch (error) {
             return NextResponse.json({error: "Error posting answer"}, { status: 500});

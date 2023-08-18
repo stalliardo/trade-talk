@@ -1,7 +1,7 @@
+import Answer from "@models/Answer";
 import Question from "@models/question";
-import { AnswerData } from "@types";
+import User from "@models/user";
 import { connectToDB } from "@utils/database";
-import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
@@ -22,7 +22,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
                 if(updatedQuestion.answers.length > 0) {
             
                     // populate the answers and the associated user with each answer
-                    await updatedQuestion.populate({path: "answers", populate: {path: "creator"}})   
+                    await updatedQuestion.populate({path: "answers", model: Answer, populate: {path: "creator", model: User}})   
                 }
                 return NextResponse.json({ message: "Views successfully updated!", question: updatedQuestion }, { status: 200 })
 
