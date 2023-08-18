@@ -6,14 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
     if (req.method === "GET") {
-
         const { id } = params;
-        
-        // const { searchParams } = new URL(req.url);
-        // const userId = searchParams.get("userId");
-
-        console.log("useragent = ", req.headers.get("user-agent"));
-
         if (id) {
             try {
                 await connectToDB();
@@ -25,14 +18,13 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
                 )
 
                 if(updatedQuestion.answers.length > 0) {
-            
                     // populate the answers and the associated user with each answer
                     await updatedQuestion.populate({path: "answers", model: Answer, populate: {path: "creator", model: User}})   
                 }
                 return NextResponse.json({ message: "Views successfully updated!", question: updatedQuestion }, { status: 200 })
 
             } catch (error) {
-                console.log("error = ", error);
+                console.error("error = ", error);
                 return NextResponse.json({ error: 'Error updating the view count.' }, { status: 500 })
             }
         } else {

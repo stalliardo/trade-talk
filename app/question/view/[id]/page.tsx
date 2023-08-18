@@ -17,8 +17,6 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
         const response = await fetch(`/api/question/view/${params.id}`);
         const data = await response.json();
 
-        console.log("data from /apiquestion/view = ", data.question);
-
         setQuestion(data.question);
       } catch (error) {
         console.error("Error getting the question data from the api");
@@ -31,12 +29,9 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
   }, [])
 
   const [answer, setAnswer] = useState("");
-  console.log("user = ", session?.user.username);
 
   const handleAnswerSubmitted = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log("submit anser called");
 
     const newAnswer: AnswerData = {
       text: answer,
@@ -61,7 +56,7 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
         }
       }
     } catch (error) {
-      console.log("error caught = ", error);
+      console.error("error caught = ", error);
     }
   }
 

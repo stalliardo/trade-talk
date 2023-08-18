@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react'
 const QuestionHomePage = () => {
 
   const [data, setData] = useState<QuestionData[]>([]);
+  const [fData, setFData] = useState<QuestionData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -18,10 +19,9 @@ const QuestionHomePage = () => {
         const response = await fetch("/api/question");
         const data = await response.json();
 
-        console.log("data = ", data);
-
         if (data.questions && data.questions.length) {
           setData(data.questions);
+          setFData(data.questions);
         }
       } catch (error) {
 
@@ -33,18 +33,24 @@ const QuestionHomePage = () => {
   }, [])
 
   const filterData = (filter: string) => {
+    let tempData: QuestionData[];
+
     if (filter === "Unanswered") {
-      return data.filter((item: QuestionData) => item.answers.length === 0);
+      tempData = data.filter((item: QuestionData) => item.answers.length === 0);
     } else if (filter === "Answered") {
-      return data.filter((item: QuestionData) => item.answers.length > 0)
+      return tempData = data.filter((item: QuestionData) => item.answers.length > 0)
+    }
+    else if (filter === "All") tempData = data;
+    else {
+      tempData = data;
     }
 
-    return data;
+    return tempData;
   }
 
   const handleFilterSelected = (filter: string) => {
     const filteredData = filterData(filter);
-    setData(filteredData);
+    setFData(filteredData);
   }
 
   return (
@@ -57,26 +63,27 @@ const QuestionHomePage = () => {
       <div className="border text-center px-20 max-w-7xl mx-auto mt-10 h-fit py-10">
         <div>
           <h2 className='text-xl text-left'>Ask Tradesman for Advice:</h2>
-          <Search />
+          <Search 
+            onSearchResult={(question) => setFData(question)}
+            onResetData={() => setFData(data)}
+          />
         </div>
 
         <div>
-        {/* TODO FIX */}
-          <Filter filterSelected={handleFilterSelected} /> 
+          <Filter filterSelected={handleFilterSelected} />
         </div>
-
         {
           !isLoading ?
             <div>
               {
                 data.length ?
-                  <SearchResults data={data} /> : null
+                  <SearchResults data={fData} /> : null
               }
-            </div> : 
+            </div> :
             <Spinner />
         }
       </div>
-      
+
     </section>
   )
 }

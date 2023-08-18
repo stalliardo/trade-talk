@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 const Filter = ({filterSelected}: {filterSelected: (filter: string) => void}) => {
 
-    const [selected, setselected] = useState("");
+    const [selected, setselected] = useState("All");
 
     useEffect(() => {
         filterSelected(selected);
