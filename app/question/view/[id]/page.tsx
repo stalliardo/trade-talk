@@ -42,10 +42,6 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
       text: answer,
       questionId: params.id,
       userId: session?.user.id,
-      creator: {
-        username: session?.user.username,
-        email: ""
-      },
     }
 
     try {
@@ -60,7 +56,7 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
 
           setQuestion((prev) => ({
             ...prev as QuestionData,
-            answers: [...prev?.answers as AnswerData[], { ...newAnswer }]
+            answers: [...prev?.answers as AnswerData[], {...data.answer}]
           }))
         }
       }
@@ -123,4 +119,3 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
 }
 
 export default ViewQuestionPage;
-

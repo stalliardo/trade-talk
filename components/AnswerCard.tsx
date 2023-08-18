@@ -5,10 +5,7 @@ interface AnswerCardProps {
   data: AnswerData
 }
 
-
 const AnswerCard = ({ data }: AnswerCardProps) => {
-  // console.log("data from answer card = ", data);
-
   let formattedDate;
 
   if (data.createdOn) {
