@@ -5,12 +5,14 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import SelectMenu from '@components/SelectMenu';
 import { tradesList } from '@consts';
+import Button from '@components/Button';
 
 const QuestionPage = () => {
   const [questionCategory, setQuestionCategory] = useState('Bricklaying');
   const [title, setTitle] = useState('');
   const [question, setQuestion] = useState('');
   const [errorText, setErrorText] = useState(""); // TODO
+  const [loading, setLoading] = useState(false);
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const router = useRouter();
   const { data: session } = useSession();
@@ -24,6 +26,7 @@ const QuestionPage = () => {
     }
 
     try {
+      setLoading(true);
       const response = await fetch(`/api/question/new`, {
         method: "POST",
         body: JSON.stringify({
@@ -40,10 +43,13 @@ const QuestionPage = () => {
     } catch (error) {
       setErrorText("There was a problem creating the question. Please try again later");
     }
+    finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
-    if (question.length < 16 || title.length < 10) {
+    if (question.length < 16 || title.length < 5) {
       setSubmitButtonDisabled(true)
     } else {
       setSubmitButtonDisabled(false);
@@ -69,9 +75,9 @@ const QuestionPage = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className='input_bg'
-                minLength={10}
+                minLength={5}
                 required
-                placeholder='min 10 characterss'
+                placeholder='min 5 characterss'
               />
             </label>
           </div>
@@ -86,7 +92,8 @@ const QuestionPage = () => {
               />
             </label>
           </div>
-          <button type="submit" className='button_bg w-1/3 mt-6' disabled={submitButtonDisabled}>Submit</button>
+          <Button type='submit' text='Submit' loading={loading} disabled={submitButtonDisabled}/>
+          {/* <button type="submit" className='button_bg w-1/3 mt-6' disabled={submitButtonDisabled}>Submit</button> */}
         </form>
       </div>
     </div>

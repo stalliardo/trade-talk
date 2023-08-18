@@ -38,6 +38,9 @@ body {
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
+} & .button {
+  width: 30px;
+  height: 30px
 }
 
 @keyframes rotation {
