@@ -3,41 +3,54 @@
 import Filter from '@components/Filter';
 import Search from '@components/Search'
 import SearchResults from '@components/SearchResults'
+import Spinner from '@components/Spinner';
 import { QuestionData } from '@types';
 import React, { useEffect, useState } from 'react'
 
 const QuestionHomePage = () => {
 
   const [data, setData] = useState<QuestionData[]>([]);
+  const [fData, setFData] = useState<QuestionData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch("/api/question");
-      const data = await response.json();
+      try {
+        const response = await fetch("/api/question");
+        const data = await response.json();
 
-      console.log("data = ", data);
+        if (data.questions && data.questions.length) {
+          setData(data.questions);
+          setFData(data.questions);
+        }
+      } catch (error) {
 
-      if(data.questions && data.questions.length){
-        setData(data.questions);
+      } finally {
+        setIsLoading(false);
       }
     }
-
     getData();
   }, [])
 
   const filterData = (filter: string) => {
-    if(filter === "Unanswered"){
-      return data.filter((item: QuestionData) => item.answers.length === 0);
-    } else if(filter === "Answered") {
-     return data.filter((item: QuestionData) => item.answers.length > 0)
+    let tempData: QuestionData[];
+
+    if (filter === "Unanswered") {
+      tempData = data.filter((item: QuestionData) => item.answers.length === 0);
+    } else if (filter === "Answered") {
+      return tempData = data.filter((item: QuestionData) => item.answers.length > 0)
+    }
+    else if (filter === "All") tempData = data;
+    else {
+      tempData = data;
     }
 
-    return data;
+    return tempData;
   }
 
   const handleFilterSelected = (filter: string) => {
     const filteredData = filterData(filter);
-    setData(filteredData);
+    setFData(filteredData);
   }
 
   return (
@@ -50,20 +63,27 @@ const QuestionHomePage = () => {
       <div className="border text-center px-20 max-w-7xl mx-auto mt-10 h-fit py-10">
         <div>
           <h2 className='text-xl text-left'>Ask Tradesman for Advice:</h2>
-          <Search />
+          <Search 
+            onSearchResult={(question) => setFData(question)}
+            onResetData={() => setFData(data)}
+          />
         </div>
 
         <div>
-          <Filter filterSelected={handleFilterSelected}/>
+          <Filter filterSelected={handleFilterSelected} />
         </div>
-
-        <div>
-          {
-            data.length ?
-            <SearchResults data={data}/> : null
-          }
-        </div>
+        {
+          !isLoading ?
+            <div>
+              {
+                data.length ?
+                  <SearchResults data={fData} /> : null
+              }
+            </div> :
+            <Spinner />
+        }
       </div>
+
     </section>
   )
 }

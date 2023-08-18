@@ -1,21 +1,25 @@
 "use client";
 
+import { QuestionData } from '@types';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+interface SearchProps {
+    onSearchResult: (question: QuestionData[]) => void;
+    onResetData: () => void;
+}
 
-const Search = () => {
-
+const Search = ({ onSearchResult, onResetData }: SearchProps) => {
     const [searchText, setSearchText] = useState("");
     const [searchButtonDisabled, setSearchButtonDisabled] = useState(true);
 
     useEffect(() => {
-        if(searchText.length > 3) {
+        if (searchText.length > 3) {
             setSearchButtonDisabled(false);
         }
         else {
+            onResetData();
             setSearchButtonDisabled(true);
-
         }
     }, [searchText]);
 
@@ -26,17 +30,12 @@ const Search = () => {
             const response = await fetch(`/api/question/search?q=${searchText}`);
             const data = await response.json();
 
-            console.log("data = ", data);
-
-            if(data.questions.length === 0) {
-                console.log("no questions found");
-            } else {
-                console.log("questions found: ", data.questions);
+            if (data.questions.length > 0) {
+                onSearchResult(data.questions);
             }
         } catch (error) {
-            
+            console.error("Error: ", error);
         }
-
     }
 
     return (

@@ -6,8 +6,6 @@ interface SearchResultsProps {
 }
 
 const SearchResults = ({ data }: SearchResultsProps) => {
-
-  console.log("data passed in = ", data);
   return (
     <div>
       <div className="flex flex-col mt-16">

@@ -13,16 +13,16 @@ const QuestionCard = ({ question }: QuestionCardProps) => {
     return (
         <div className=" w-full text-left p-4 bg-slate-800 border border-b border-custom_border mb-3 flex justify-between cursor-pointer hover:bg-slate-700" onClick={() => router.push(`/question/view/${question._id}`)}>
             <div className="w-1/4">
-                <p className="text-sky-200">{question.title}</p>
+                <p className="text-orange-500">{question.title}</p>
             </div>
             <div className="w-1/4">
                 <p>{question.category}</p>
             </div>
             <div className="w-1/6">
-                <p>{question.views}</p>
+                <p>{question.views.length}</p>
             </div>
             <div className="w-1/6">
-                <p>10</p>
+                <p>{question.answers.length}</p>
             </div>
         </div>
     )

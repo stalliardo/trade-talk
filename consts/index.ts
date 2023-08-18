@@ -23,6 +23,7 @@ export const tradesList = [
 ];
 
 export const filterOptions = [
+    'All',
     'Answered',
     'Unanswered'
 ]
