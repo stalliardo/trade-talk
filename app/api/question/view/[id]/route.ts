@@ -8,6 +8,11 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     if (req.method === "GET") {
 
         const { id } = params;
+        
+        // const { searchParams } = new URL(req.url);
+        // const userId = searchParams.get("userId");
+
+        console.log("useragent = ", req.headers.get("user-agent"));
 
         if (id) {
             try {
@@ -15,7 +20,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 
                 const updatedQuestion = await Question.findByIdAndUpdate(
                     id,
-                    { $inc: { views: 1 } },
+                    {$addToSet: {views: req.headers.get("user-agent")}},
                     { new: true }
                 )
 

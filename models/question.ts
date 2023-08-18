@@ -24,10 +24,9 @@ const QuestionSchema = new Schema({
         default: Date.now
     },
 
-    views: {
-        type: Number,
-        default: 0
-    },
+    views: [{
+        type: String // Store user agents as strings
+    }],
 
     answers: [
         {

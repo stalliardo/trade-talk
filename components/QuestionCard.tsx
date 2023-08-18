@@ -19,7 +19,7 @@ const QuestionCard = ({ question }: QuestionCardProps) => {
                 <p>{question.category}</p>
             </div>
             <div className="w-1/6">
-                <p>{question.views}</p>
+                <p>{question.views.length}</p>
             </div>
             <div className="w-1/6">
                 <p>{question.answers.length}</p>

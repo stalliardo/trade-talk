@@ -28,6 +28,6 @@ export interface QuestionData {
     category: string;
     question: string;
     _id: string;
-    views: number;
+    views: string[];
     answers: AnswerData[]; // TODO change this will be an array of answers
 }
