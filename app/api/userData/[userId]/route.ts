@@ -1,3 +1,4 @@
+import Answer from "@models/Answer";
 import Question from "@models/question";
 import { connectToDB } from "@utils/database";
 import { NextRequest, NextResponse } from "next/server";
@@ -19,7 +20,9 @@ export async function GET (req: NextRequest, {params}: {params: {userId: string}
 
             // 2 - get the users answers by id
 
-            return NextResponse.json(questions, {status: 200});
+            const answers = await Answer.find({creator: userId});
+
+            return NextResponse.json({questions, answers}, {status: 200});
         } catch (error) {
             
         }

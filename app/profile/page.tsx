@@ -2,11 +2,44 @@
 
 import UsersAnswers from "@components/user/UsersAnswers";
 import UsersQuestions from "@components/user/UsersQuestions";
+import { AnswerData, QuestionData } from "@types";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 const ProfilePage = () => {
 
   const { data: session } = useSession();
+
+  const [questions, setQuestions] = useState<QuestionData[]>([]);
+  const [answers, setAnswers] = useState<AnswerData[]>([]);
+
+  useEffect(() => {
+    const getUserData = async () => {
+
+      try {
+        const response = await fetch(`/api/userData/${session?.user.id}`);
+        if(response.ok){
+          const data = await response.json();
+
+          if(data.questions.length) {
+            setQuestions(data.questions);
+          }
+
+          if(data.answers.length) {
+            setAnswers(data.answers);
+          }
+        }
+        
+      } catch (error) {
+        console.error("Error getting users questions. Error: ", error);
+      } finally {
+        // TODO set is loading
+      }
+    }
+    if(session?.user.id) {
+      getUserData();
+    }
+  }, [session?.user]);
 
   return (
     <section className="border w-3/4 mx-auto mt-12">
@@ -30,13 +63,13 @@ const ProfilePage = () => {
 
       <div className="w-full border display flex mt-12 px-4">
         <div className="border border-red-600 w-1/2 h-12">
-          <h2 className="text-2xl">Questions Posted:</h2>
-          <UsersQuestions />
+          <h2 className="text-2xl">Questions Posted: <span className="text-orange-500">{questions ? questions.length : 0}</span></h2>
+          <UsersQuestions data={questions}/>
         </div>
 
         <div className="border border-red-600 w-1/2 h-12">
-          <h2 className="text-2xl">Answers Posted:</h2>
-          <UsersAnswers />
+          <h2 className="text-2xl">Answers Posted: <span className="text-orange-500">{answers ? answers.length : 0}</span></h2>
+          <UsersAnswers data={answers}/>
         </div>
       </div>
     </section>

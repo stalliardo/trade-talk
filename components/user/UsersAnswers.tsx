@@ -1,9 +1,26 @@
+import AnswerCard from '@components/AnswerCard';
+import { AnswerData } from '@types'
 import React from 'react'
 
-const UsersAnswers = () => {
+interface UserAnswersProps {
+  data: AnswerData[];
+}
+
+const UsersAnswers = ({ data }: UserAnswersProps) => {
+  console.log("%canswerDara", "color:red", data);
   return (
     <div className='border w-full'>
-        Get the answers and display here using the answer card
+      {
+        data.length ?
+          <div>
+            {
+              data.map((a: AnswerData) => (
+                <AnswerCard key={a._id || a.text} data={a} />
+              ))
+            }
+          </div> :
+          <div></div>
+      }
     </div>
   )
 }
