@@ -18,25 +18,25 @@ const ProfilePage = () => {
 
       try {
         const response = await fetch(`/api/userData/${session?.user.id}`);
-        if(response.ok){
+        if (response.ok) {
           const data = await response.json();
 
-          if(data.questions.length) {
+          if (data.questions.length) {
             setQuestions(data.questions);
           }
 
-          if(data.answers.length) {
+          if (data.answers.length) {
             setAnswers(data.answers);
           }
         }
-        
+
       } catch (error) {
         console.error("Error getting users questions. Error: ", error);
       } finally {
         // TODO set is loading
       }
     }
-    if(session?.user.id) {
+    if (session?.user.id) {
       getUserData();
     }
   }, [session?.user]);
@@ -46,32 +46,32 @@ const ProfilePage = () => {
       <h1 className="text-3xl">Your Profile</h1>
 
       <div className="relative px-4 mt-6">
-        <div className="border w-1/4">
+        <div className=" w-1/4">
           <label className="text-gray-400 text-xl">Name:</label>
           <p className="text-2xl">{session?.user.name}</p>
         </div>
 
-        <div className="border w-1/4 mt-6">
+        <div className=" w-1/4 mt-6">
           <label className="text-gray-400 text-xl">Email:</label>
           <p className="text-2xl">{session?.user.email}</p>
         </div>
 
-        <div className="absolute right-0 bottom-0">
+        <div className="absolute right-4 bottom-0">
           <button className="button_bg_danger">Delete Account</button>
         </div>
       </div>
 
-      <div className="w-full border display flex mt-12 px-4">
-        <div className="border border-red-600 w-1/2 h-12">
-          <h2 className="text-2xl">Questions Posted: <span className="text-orange-500">{questions ? questions.length : 0}</span></h2>
-          <UsersQuestions data={questions}/>
-        </div>
-
-        <div className="border border-red-600 w-1/2 h-12">
-          <h2 className="text-2xl">Answers Posted: <span className="text-orange-500">{answers ? answers.length : 0}</span></h2>
-          <UsersAnswers data={answers}/>
+      <div className="px-4">
+        <div className=" w-full mt-16">
+          <h2 className="text-xl">Questions Posted: <span className="text-orange-500">{questions ? questions.length : 0}</span></h2>
+          <UsersQuestions data={questions} />
         </div>
       </div>
+      {/* <div className="border border-red-600 w-full h-12">
+          <h2 className="text-2xl">Answers Posted: <span className="text-orange-500">{answers ? answers.length : 0}</span></h2>
+          <UsersAnswers data={answers}/>
+        </div> */}
+
     </section>
   )
 }
