@@ -35,7 +35,7 @@ const UsersAnswers = ({ data, onDelete }: UserAnswersProps) => {
         headers={['Answer']}
         renderRow={(answer) => (
           <>
-            <td className='px-2 w-[80%]'>{answer.text}</td>
+            <td className='pl-2 pr-4 w-[80%]'>{answer.text}</td>
           </>
         )}
         onDelete={(answer) => handleDelete(answer)}
