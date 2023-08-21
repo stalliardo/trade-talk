@@ -74,21 +74,21 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
               </div>
 
               <div className='w-1/2 pl-20 absolute right-0 top-2'>
-                {/* if authed */}
+                {/* if authed and not the creator */}
                 {
                   session?.user ?
-                    <>
-                      <p>Answer this question:</p>
-                      <form className='flex flex-col' onSubmit={handleAnswerSubmitted}>
-                        <textarea
-                          value={answer}
-                          onChange={(e) => setAnswer(e.target.value)}
-                          className='input_bg w-full min-h-[200px]'
-                          placeholder='min 16 characters'
-                        />
-                        <button type='submit' className='button_bg w-1/6 mt-4' disabled={answer.length < 16}>Submit</button>
-                      </form>
-                    </>
+                    session.user.id !== question?.creator && <>
+                    <p>Answer this question:</p>
+                    <form className='flex flex-col' onSubmit={handleAnswerSubmitted}>
+                      <textarea
+                        value={answer}
+                        onChange={(e) => setAnswer(e.target.value)}
+                        className='input_bg w-full min-h-[200px]'
+                        placeholder='min 16 characters'
+                      />
+                      <button type='submit' className='button_bg w-1/6 mt-4' disabled={answer.length < 16}>Submit</button>
+                    </form>
+                  </>
                     : <p className='text-xl text-right ' ><span className='text-orange-500 cursor-pointer' onClick={() => signIn()}>Log in</span> to answer this question</p>
                 }
               </div>
