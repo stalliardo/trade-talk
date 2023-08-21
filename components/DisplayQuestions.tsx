@@ -1,11 +1,11 @@
 import { QuestionData } from "@types"
 import QuestionCard from "./QuestionCard";
 
-interface SearchResultsProps {
+interface DisplayQuestionsProps {
   data: QuestionData[];
 }
 
-const SearchResults = ({ data }: SearchResultsProps) => {
+const DisplayQuestions = ({ data }: DisplayQuestionsProps) => {
   return (
     <div>
       <div className="flex flex-col mt-16">
@@ -31,4 +31,4 @@ const SearchResults = ({ data }: SearchResultsProps) => {
   )
 }
 
-export default SearchResults
+export default DisplayQuestions
