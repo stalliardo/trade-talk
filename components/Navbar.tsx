@@ -16,14 +16,14 @@ const Navbar = () => {
                 </div>
             </Link>
             {/* links */}
-            <div className='flex items-center'>
+            <div className='hidden sm:flex items-center'>
                 {
                     session !== null &&
                     <div className='flex items-center'>
                         <Link href="/question/new" className='mr-3 hover:text-orange-500'>
                             Create Question
                         </Link>
-                        <Link href='/profile' className='mr-12 hover:text-orange-500'>
+                        <Link href='/profile' className='mr-6 pr-6 hover:text-orange-500 border-r border-orange-500'>
                             {session?.user.name}
                         </Link>
                     </div>
