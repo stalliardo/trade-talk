@@ -1,8 +1,10 @@
+import QuestionForm from '@components/QuestionForm'
+import React from 'react'
 
-const EditPage = () => {
+const EditQuestionPage = ({params}: {params: {id: string}}) => {
   return (
-    <div>EditPage</div>
+    <QuestionForm questionId={params.id}/>
   )
 }
 
-export default EditPage
+export default EditQuestionPage

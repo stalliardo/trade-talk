@@ -41,6 +41,11 @@ const ProfilePage = () => {
     }
   }, [session?.user]);
 
+  const handleQuestionDeleted = (q: QuestionData) => {
+    const filteredData = questions.filter((question) => question._id !== q._id);
+    setQuestions(filteredData);
+  }
+
   return (
     <section className="border w-3/4 mx-auto mt-12">
       <h1 className="text-3xl">Your Profile</h1>
@@ -64,13 +69,16 @@ const ProfilePage = () => {
       <div className="px-4">
         <div className=" w-full mt-16">
           <h2 className="text-xl">Questions Posted: <span className="text-orange-500">{questions ? questions.length : 0}</span></h2>
-          <UsersQuestions data={questions} />
+          <UsersQuestions data={questions} onDelete={handleQuestionDeleted}/>
         </div>
       </div>
-      {/* <div className="border border-red-600 w-full h-12">
-          <h2 className="text-2xl">Answers Posted: <span className="text-orange-500">{answers ? answers.length : 0}</span></h2>
-          <UsersAnswers data={answers}/>
-        </div> */}
+
+      <div className="px-4 mt-16">
+        <div className="w-full h-12">
+          <h2 className="text-xl">Answers Posted: <span className="text-orange-500">{answers ? answers.length : 0}</span></h2>
+          <UsersAnswers data={answers} />
+        </div>
+      </div>
 
     </section>
   )
