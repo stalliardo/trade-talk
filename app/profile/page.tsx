@@ -56,7 +56,7 @@ const ProfilePage = () => {
           <p className="text-2xl">{session?.user.email}</p>
         </div>
 
-        <div className="absolute right-0 bottom-0">
+        <div className="absolute right-4 bottom-0">
           <button className="button_bg_danger">Delete Account</button>
         </div>
       </div>

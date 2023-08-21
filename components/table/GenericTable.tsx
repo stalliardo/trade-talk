@@ -1,6 +1,5 @@
 import React from 'react';
 
-// Define the props for the table
 interface TableProps<T> {
   data: T[];
   headers: string[];
@@ -10,17 +9,16 @@ interface TableProps<T> {
   onView?: (item: T) => void;
 }
 
-// Create the generic table component
 function GenericTable<T>({ data, headers, renderRow, onEdit, onDelete, onView }: TableProps<T>) {
   return (
-    <table className="min-w-full divide-y divide-gray-800 border">
-    <thead className="bg-custom_secondary border-b border-custom_border">
+    <table className="min-w-full divide-y divide-gray-800">
+    <thead className="bg-slate-800 border-b border-custom_border">
       <tr>
         {headers.map((header, index) => (
           <th
             key={index}
             scope="col"
-            className="py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            className="py-3 pl-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
             {header}
           </th>
