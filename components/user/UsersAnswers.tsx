@@ -5,22 +5,29 @@ import React from 'react'
 
 interface UserAnswersProps {
   data: AnswerData[];
+  onDelete: (answer: AnswerData) => void;
 }
 
-const UsersAnswers = ({ data }: UserAnswersProps) => {
+const UsersAnswers = ({ data, onDelete }: UserAnswersProps) => {
+  const handleDelete = async(answer: AnswerData) => {
+    const confirmation = confirm(`Are you sure you want to delete this answer?`);
 
+    if(confirmation){
+      try {
+        const response = await fetch(`/api/answer/${answer._id}`, {
+          method: "DELETE"
+        });
 
-  const handleEdit = (question: AnswerData) => {
-    console.log("edit clicked + q  =", question);
-
+        if(response.ok){
+          onDelete(answer);
+        }
+      
+      } catch (error) {
+        console.error("Error deleting the question");
+      }
+    }
   }
-  const handleDelete = (question: AnswerData) => {
-    console.log("deleet clicked + q  =", question);
 
-  }
-
-
-  console.log("%canswerDara", "color:red", data);
   return (
     <div className='w-full mt-4'>
       <GenericTable<AnswerData>
@@ -28,13 +35,9 @@ const UsersAnswers = ({ data }: UserAnswersProps) => {
         headers={['Answer']}
         renderRow={(answer) => (
           <>
-            <td className='pl-2 w-[80%]'>{answer.text}</td>
-            {/* <td className='pl-2'>{answer.category}</td>
-            <td className='pl-2 w-[10%]'>{answer.views.length}</td>
-            <td className='pl-2 w-[10%]'>{answer.answers.length}</td> */}
+            <td className='px-2 w-[80%]'>{answer.text}</td>
           </>
         )}
-        onEdit={(answer) => handleEdit(answer)}
         onDelete={(answer) => handleDelete(answer)}
       />
     </div>

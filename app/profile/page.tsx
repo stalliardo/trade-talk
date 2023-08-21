@@ -46,6 +46,11 @@ const ProfilePage = () => {
     setQuestions(filteredData);
   }
 
+  const handleAnswerDeleted = (a: AnswerData) => {
+    const filteredData = answers.filter((answer) => answer._id !== a._id);
+    setAnswers(filteredData);
+  }
+
   return (
     <section className="border w-3/4 mx-auto mt-12">
       <h1 className="text-3xl">Your Profile</h1>
@@ -76,7 +81,7 @@ const ProfilePage = () => {
       <div className="px-4 mt-16">
         <div className="w-full h-12">
           <h2 className="text-xl">Answers Posted: <span className="text-orange-500">{answers ? answers.length : 0}</span></h2>
-          <UsersAnswers data={answers} />
+          <UsersAnswers data={answers} onDelete={handleAnswerDeleted}/>
         </div>
       </div>
 
