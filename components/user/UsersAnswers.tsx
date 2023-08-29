@@ -29,7 +29,7 @@ const UsersAnswers = ({ data, onDelete }: UserAnswersProps) => {
   }
 
   return (
-    <div className='w-full mt-4'>
+    <div className='w-full mt-4 overflow-x-scroll sm:overflow-x-auto'>
       <GenericTable<AnswerData>
         data={data}
         headers={['Answer']}

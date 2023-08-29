@@ -41,7 +41,7 @@ const UsersQuestions = ({ data, onDelete }: UserQuestionProps) => {
     }
   }
   return (
-    <div className='w-full mt-4'>
+    <div className='w-full mt-4 overflow-x-scroll sm:overflow-x-auto'>
       <GenericTable<QuestionData>
         data={data}
         headers={['Title', 'Category', 'Views', 'Answers']}

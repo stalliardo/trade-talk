@@ -109,7 +109,8 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
                       <button type='submit' className='button_bg w-1/6 mt-4' disabled={answer.length < 16}>Submit</button>
                     </form>
                   </>
-                    : <p className='text-xl text-right ' ><span className='text-orange-500 cursor-pointer' onClick={() => signIn()}>Log in</span> to answer this question</p>
+                    : <p className='text-xl text-right ' ><span className='text-orange-500 cursor-pointer' onClick={() => signIn("google")}>Log in</span> to answer this question</p>
+
                 }
               </div>
             </div>
