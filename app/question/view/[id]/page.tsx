@@ -110,6 +110,7 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
                     </form>
                   </>
                     : <p className='text-xl text-right ' ><span className='text-orange-500 cursor-pointer' onClick={() => signIn("google")}>Log in</span> to answer this question</p>
+
                 }
               </div>
             </div>

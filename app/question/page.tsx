@@ -79,6 +79,7 @@ const QuestionHomePage = () => {
         {
           !isLoading ?
             <div className='text-left mt-8 sm:mt-16 overflow-x-scroll sm:overflow-x-auto'>
+
               <GenericTable<QuestionData>
                 data={fData}
                 headers={['Title', 'Category', 'Views', 'Answers']}
