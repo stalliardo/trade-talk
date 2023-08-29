@@ -1,23 +1,25 @@
 
 import Provider from '@components/Provider'
 import './globals.css'
+import Navbar from '@components/Navbar'
+import Footer from '@components/Footer'
 
 export const metadata = {
-    title: "PromptVista",
+    title: "Trade Talk",
     description: "Discover and share AI prompts"
 }
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <html lang='en'>
-            <body>
+        <html lang='en w-1/2'>
+            <body className='bg-custom_main'>
                 <Provider>
-                    <div className='main'>
-                        <div className='gradient' />
-                    </div>
-                    <main className='app'>
-                        {/* <Navbar /> */}
+                    <main>
+                        <Navbar />
                         {children}
+                        <div className='w-inherit'>
+                            {/* <Footer /> */}
+                        </div>
                     </main>
                 </Provider>
             </body>

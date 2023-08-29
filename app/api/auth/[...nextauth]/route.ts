@@ -31,6 +31,7 @@ const handler = NextAuth({
   
           return true
         } catch (error: any) {
+          console.log("error signinin in. Erorro", error);
           return false
         }
       },
@@ -39,6 +40,7 @@ const handler = NextAuth({
         // store the user id from MongoDB to session
         const sessionUser = await User.findOne({ email: session?.user?.email });
         session.user.id = sessionUser._id.toString();
+        session.user.username = sessionUser.username;
         return session;
       },
    }
