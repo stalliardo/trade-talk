@@ -65,30 +65,50 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
       {
         !isLoading ?
           <div className="w-[90%] mt-16 mx-auto relative">
-            <div className='flex'>
-              <div className='w-1/2'>
+            <div className='flex flex-col sm:flex-row'>
+              <div className='sm:w-1/2'>
                 <h1 className='text-2xl font-bold'>{question?.title}</h1>
                 <p className='text-gray-400 text-lg mb-4 w-full'>
                   {question?.question}
                 </p>
               </div>
 
-              <div className='w-1/2 pl-20 absolute right-0 top-2'>
-                {/* if authed */}
+              <div className='w-full  sm:hidden'>
+                {/* if authed and not the creator */}
                 {
                   session?.user ?
-                    <>
-                      <p>Answer this question:</p>
-                      <form className='flex flex-col' onSubmit={handleAnswerSubmitted}>
-                        <textarea
-                          value={answer}
-                          onChange={(e) => setAnswer(e.target.value)}
-                          className='input_bg w-full min-h-[200px]'
-                          placeholder='min 16 characters'
-                        />
-                        <button type='submit' className='button_bg w-1/6 mt-4' disabled={answer.length < 16}>Submit</button>
-                      </form>
-                    </>
+                    session.user.id !== question?.creator && <>
+                    <p>Answer this question:</p>
+                    <form className='' onSubmit={handleAnswerSubmitted}>
+                      <textarea
+                        value={answer}
+                        onChange={(e) => setAnswer(e.target.value)}
+                        className='input_bg w-full min-h-[200px]'
+                        placeholder='min 16 characters'
+                      />
+                      <button type='submit' className='button_bg w-1/2 mt-4' disabled={answer.length < 16}>Submit</button>
+                    </form>
+                  </>
+                    : <p className='text-xl text-right ' ><span className='text-orange-500 cursor-pointer' onClick={() => signIn("google")}>Log in</span> to answer this question</p>
+                }
+              </div>
+
+              <div className='w-1/2 pl-20 absolute right-0 top-2 hidden sm:block'>
+                {/* if authed and not the creator */}
+                {
+                  session?.user ?
+                    session.user.id !== question?.creator && <>
+                    <p>Answer this question:</p>
+                    <form className='flex flex-col' onSubmit={handleAnswerSubmitted}>
+                      <textarea
+                        value={answer}
+                        onChange={(e) => setAnswer(e.target.value)}
+                        className='input_bg w-full min-h-[200px]'
+                        placeholder='min 16 characters'
+                      />
+                      <button type='submit' className='button_bg w-1/6 mt-4' disabled={answer.length < 16}>Submit</button>
+                    </form>
+                  </>
                     : <p className='text-xl text-right ' ><span className='text-orange-500 cursor-pointer' onClick={() => signIn()}>Log in</span> to answer this question</p>
                 }
               </div>
@@ -97,7 +117,7 @@ const ViewQuestionPage = ({ params }: { params: { id: string } }) => {
             {
               question?.answers.length ?
                 <div>
-                  <p className='mt-2 mb-4'>{`${question.answers.length} answer(s)`}</p>
+                  <p className='mt-6 sm:mt-2 mb-4'>{`${question.answers.length} answer(s)`}</p>
                   {
                     question.answers.map((a: AnswerData) => (
                       <AnswerCard key={a._id || a.text} data={a} />

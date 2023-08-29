@@ -15,7 +15,7 @@ const AnswerCard = ({ data }: AnswerCardProps) => {
   }
 
   return (
-    <div className='container_bg w-1/2 mt-4'>
+    <div className='container_bg w-full sm:w-1/2 mt-4'>
       <p className='text-orange-500'>
         {typeof data.creator === "string"
           ? "Creator ID: " + data.creator
