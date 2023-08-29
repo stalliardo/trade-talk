@@ -11,7 +11,7 @@ interface TableProps<T> {
 
 function GenericTable<T>({ data, headers, renderRow, onEdit, onDelete, onView }: TableProps<T>) {
   return (
-    <table className="w-full min-w-[600px] divide-y divide-gray-800 overflow-x-scroll">
+    <table className="w-full min-w-[600px] divide-y divide-gray-800">
     <thead className="bg-slate-800 border-b border-custom_border">
       <tr>
         {headers.map((header, index) => (
