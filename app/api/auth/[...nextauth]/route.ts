@@ -31,6 +31,7 @@ const handler = NextAuth({
   
           return true
         } catch (error: any) {
+          console.log("error signinin in. Erorro", error);
           return false
         }
       },

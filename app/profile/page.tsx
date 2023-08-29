@@ -62,8 +62,8 @@ const ProfilePage = () => {
 
   return (
     isLoading ? <Spinner classes="mt-32" /> :
-      <section className="w-3/4 mx-auto mt-12">
-        <h1 className="text-3xl">Your Profile</h1>
+      <section className="w-full sm:w-3/4 mx-auto mt-12">
+        <h1 className="text-3xl pl-2 sm:pl-0">Your Profile</h1>
 
         <div className="relative px-4 mt-6">
           <div className=" w-1/4">
@@ -76,7 +76,11 @@ const ProfilePage = () => {
             <p className="text-2xl">{session?.user.email}</p>
           </div>
 
-          <div className="absolute right-4 bottom-0">
+          <div className="sm:hidden mt-6">
+            <button className="button_bg_danger" onClick={handleDeleteAccount}>Delete Account</button>
+          </div>
+
+          <div className="hidden sm:block absolute right-4 bottom-0">
             <button className="button_bg_danger" onClick={handleDeleteAccount}>Delete Account</button>
           </div>
         </div>
